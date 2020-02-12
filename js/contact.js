@@ -4,16 +4,11 @@ let m = 0.0
 let f = 0.0
 let o = 0.0
 let count = 0.0
-
+console.log("Hello")
 let firebaseConfig = {
-    apiKey: "AIzaSyBjQ-pEiFhfmhf197Fl6zVXuwaw0jErnR0",
-    authDomain: "lab5-418a5.firebaseapp.com",
-    databaseURL: "https://lab5-418a5.firebaseio.com",
-    projectId: "localhost",
-    storageBucket: "lab5-418a5.appspot.com",
-    messagingSenderId: "144979673420",
-    appId: "1:144979673420:web:3ec3459597e9f2ec04cfe9",
-    measurementId: "G-7SBTYPQ2T5"
+    apiKey: "AIzaSyAsyE_CZ0lgaF-3oCqDyiWq0S6yjHTuRjE",
+    authDomain: "lab5-1-93ab9.firebaseapp.com",
+    projectId: "lab5-1-93ab9",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -169,11 +164,33 @@ db.collection('users').orderBy("Name").onSnapshot(doc =>{
                     { y: (m/count)*100, label: "Male" },
                     { y: (f/count)*100, label: "Female" },
                     { y: (o/count)*100, label: "Other" },
+                    
                    
                 ]
             }]
         };
-        $("#chartContainer").CanvasJSChart(options);
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['Task', 'All Time'],
+              ['Male',male],
+              ['Female',female],
+              ['Others',other],
+            ]);
+
+            var options = {
+              legend:{position: 'left'},
+              titleTextStyle: {color: 'black', fontSize: 30},
+              colors:['#EC00FF','#3055FF','#7EE182'] ,
+              pieHole: 0.5,
+              backgroundColor: '',
+              is3D:'true',
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+          };
         console.log(m)
     })
     // $('.textchange').text(secoundCell)
